@@ -1,0 +1,5 @@
+export const CREATE_SOP = "CREATE_SOP";
+export const LOAD_SOPS_SUCCES = "LOAD_SOPS_SUCCES";
+
+export const CREATE_DEVICE = "CREATE_DEVICE";
+export const LOAD_DEVICES_SUCCES = "LOAD_DEVICE_SUCCES";
