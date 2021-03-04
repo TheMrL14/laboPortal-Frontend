@@ -1,0 +1,11 @@
+aside {
+  background: #f04641;
+  display: flex !important;
+  flex-direction: column;
+  width: fit-content;
+  height: 100vh;
+}
+
+aside a {
+  margin: 1em;
+}

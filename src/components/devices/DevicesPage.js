@@ -6,24 +6,33 @@ import "../../style/devices.css";
 import DeviceTile from "./DeviceTile";
 import { bindActionCreators } from "redux";
 
+import SideNavDevice from "./SideNavDevice";
+
 class DevicesPage extends React.Component {
   componentDidMount() {
-    this.props.actions.loadDevices().catch((err) => {
-      alert("loading courses failed" + err);
-    });
+    const { devices, actions } = this.props;
+
+    if (devices.length === 0) {
+      actions.loadDevices().catch((error) => {
+        alert("Loading courses failed" + error);
+      });
+    }
   }
 
   render() {
     return (
-      <main>
-        <div className="centered">
-          <section className="cards">
-            {this.props.devices.map((device) => (
-              <DeviceTile key={device.name} device={device} />
-            ))}
-          </section>
-        </div>
-      </main>
+      <>
+        <SideNavDevice />
+        <section className="mainContent">
+          <div className="centered">
+            <section className="cards">
+              {this.props.devices.map((device) => (
+                <DeviceTile key={device.name} device={device} />
+              ))}
+            </section>
+          </div>
+        </section>
+      </>
     );
   }
 }
@@ -34,7 +43,7 @@ DevicesPage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({ devices: state.devices });
-
+//TODO : SIMPLIFY
 const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators(devicesActions, dispatch),
 });

@@ -1,3 +1,27 @@
+body {
+  margin: 0;
+}
+
 main {
-    margin: 5em;
+  display: grid;
+  grid-template-columns: 10% 1fr;
+}
+
+.mainContent {
+  margin: 1em 5em;
+}
+
+header {
+  padding: 2em 10%;
+
+  background: rgb(35, 45, 75);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+header a {
+  color: white;
+  text-decoration: none;
+  padding: 1em;
 }
