@@ -1,12 +1,12 @@
 import React from "react";
 import "../../style/sidenav.css";
 
-const SideNavDevice = () => {
+const SideNavSops = () => {
   return (
     <aside>
-      <a href="/device">Add new Device</a>
+      <a href="/device">Add new Sop</a>
     </aside>
   );
 };
 
-export default SideNavDevice;
+export default SideNavSops;

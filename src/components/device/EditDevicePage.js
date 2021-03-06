@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { loadDevices, saveDevice } from "../../redux/actions/deviceActions";
 import PropTypes from "prop-types";
-import "../../style/devices.css";
-import SideNavDevice from "./SideNavDevice";
-import DeviceForm from "./DeviceForm";
+import SideNavDevices from "../devices/SideNavDevices";
+import DeviceForm from "../devices/DeviceForm";
 import { newDevice } from "../../tools/Models";
 
-function ManageDevicePage({
+import "../../style/devices.css";
+import SideNavDevice from "./SideNavDevice";
+export function EditDevicePage({
   devices,
   loadDevices,
   saveDevice,
@@ -22,11 +23,13 @@ function ManageDevicePage({
       loadDevices().catch((error) => {
         alert("Loading courses failed" + error);
       });
+    } else {
+      setDevice({ ...props.device });
     }
-  }, []);
+  }, [props.device]);
 
-  function handleChange(ev) {
-    const { name, value } = ev.target;
+  function handleChange(event) {
+    const { name, value } = event.target;
     setDevice((prevDevice) => ({
       ...prevDevice,
       [name]: name === "sopId" ? parseInt(value, 10) : value,
@@ -40,9 +43,11 @@ function ManageDevicePage({
     });
   }
 
-  return (
+  return devices.length === 0 ? (
+    <h1>Loading</h1>
+  ) : (
     <>
-      <SideNavDevice />
+      {device.id ? <SideNavDevice /> : <SideNavDevices />}
       <DeviceForm
         device={device}
         errors={errors}
@@ -53,7 +58,7 @@ function ManageDevicePage({
   );
 }
 
-ManageDevicePage.propTypes = {
+EditDevicePage.propTypes = {
   device: PropTypes.object.isRequired,
   devices: PropTypes.array.isRequired,
   loadDevices: PropTypes.func.isRequired,
@@ -63,15 +68,17 @@ ManageDevicePage.propTypes = {
 };
 
 export function getDeviceBySlug(devices, slug) {
-  return devices.find((device) => device.slug === slug) || null;
+  return devices.find((device) => device.id === parseInt(slug)) || null;
 }
 
 function mapStateToProps(state, ownProps) {
   const slug = ownProps.match.params.slug;
+  console.log(slug && state.devices.length > 0);
   const device =
-    slug && state.courses.length > 0
+    slug && state.devices.length > 0
       ? getDeviceBySlug(state.devices, slug)
       : newDevice;
+
   return {
     device,
     devices: state.devices,
@@ -83,4 +90,4 @@ const mapDispatchToProps = {
   saveDevice,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageDevicePage);
+export default connect(mapStateToProps, mapDispatchToProps)(EditDevicePage);

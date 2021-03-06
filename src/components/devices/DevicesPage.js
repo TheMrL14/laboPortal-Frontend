@@ -1,51 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import * as devicesActions from "../../redux/actions/deviceActions";
+import { loadDevices } from "../../redux/actions/deviceActions";
+
 import PropTypes from "prop-types";
 import "../../style/devices.css";
 import DeviceTile from "./DeviceTile";
 import { bindActionCreators } from "redux";
 
-import SideNavDevice from "./SideNavDevice";
+import SideNavDevices from "./SideNavDevices";
 
-class DevicesPage extends React.Component {
-  componentDidMount() {
-    const { devices, actions } = this.props;
-
+function DevicesPage({ devices, loadDevices, ...props }) {
+  useEffect(() => {
     if (devices.length === 0) {
-      actions.loadDevices().catch((error) => {
+      loadDevices().catch((error) => {
         alert("Loading courses failed" + error);
       });
     }
-  }
+  }, []);
 
-  render() {
-    return (
-      <>
-        <SideNavDevice />
-        <section className="mainContent">
-          <div className="centered">
-            <section className="cards">
-              {this.props.devices.map((device) => (
-                <DeviceTile key={device.name} device={device} />
-              ))}
-            </section>
-          </div>
-        </section>
-      </>
-    );
-  }
+  return (
+    <>
+      <SideNavDevices />
+      <section className="mainContent">
+        <div className="centered">
+          <section className="cards">
+            {devices.map((device) => (
+              <DeviceTile key={device.name} device={device} />
+            ))}
+          </section>
+        </div>
+      </section>
+    </>
+  );
 }
 
 DevicesPage.propTypes = {
   devices: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired,
+  loadDevices: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({ devices: state.devices });
 //TODO : SIMPLIFY
-const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators(devicesActions, dispatch),
-});
+const mapDispatchToProps = {
+  loadDevices,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(DevicesPage);

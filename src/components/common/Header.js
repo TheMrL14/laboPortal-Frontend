@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const Header = () => {
-  const activeStyle = { color: "#F15B2A" };
+  const activeStyle = { background: "#F15B2A" };
   return (
     <header>
       <nav>
@@ -12,6 +12,10 @@ const Header = () => {
         {" | "}
         <NavLink to="/devices" activeStyle={activeStyle}>
           Devices
+        </NavLink>
+        {" | "}
+        <NavLink to="/sops" activeStyle={activeStyle}>
+          SOPs
         </NavLink>
         {" | "}
         <NavLink to="/about" activeStyle={activeStyle}>
