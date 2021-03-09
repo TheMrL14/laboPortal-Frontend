@@ -6,9 +6,11 @@ import Header from "./common/Header";
 import PageNotFound from "./PageNotFound";
 import DevicesPage from "./devices/DevicesPage";
 import "../style/index.css";
-import ManageDevicePage from "./device/EditDevicePage";
 import SopsPage from "./sops/SopsPage";
-import DevicePage from "./device/DevicePage";
+
+import EditDevice from "./device/EditDevicePage";
+import EditSop from "./sop/EditSopPage";
+import DeviceSop from "./device/DeviceSopPage";
 
 const App = () => (
   <>
@@ -19,11 +21,14 @@ const App = () => (
         <Route path="/about" component={AboutPage} />
         <Route path="/devices" component={DevicesPage} />
 
-        <Route path="/device/:slug/edit" component={ManageDevicePage} />
-        <Route path="/device/:slug/info" component={ManageDevicePage} />
-        <Route path="/device/create" component={ManageDevicePage} />
+        <Route path="/device/:slug/edit" component={EditDevice} />
+        <Route path="/device/:slug/info" component={EditDevice} />
+        <Route path="/device/:slug/sop" component={DeviceSop} />
+        <Route path="/device/create" component={EditDevice} />
 
-        <Route path="/device" component={DevicePage} />
+        <Route path="/sop/:slug/edit" component={EditSop} />
+        <Route path="/sop/create" component={EditSop} />
+
         <Route path="/sops" component={SopsPage} />
         <Route component={PageNotFound} />
       </Switch>

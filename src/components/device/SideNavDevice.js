@@ -2,7 +2,7 @@ import React from "react";
 import "../../style/sidenav.css";
 import { NavLink } from "react-router-dom";
 
-const SideNavDevice = (props) => {
+const SideNavDevice = () => {
   const activeStyle = { color: "#FFFFFF" };
   return (
     <aside>
@@ -17,14 +17,11 @@ const SideNavDevice = (props) => {
         SOP
       </NavLink>
 
-      <NavLink
-        to={"/device/" + props.id + "/discussion"}
-        activeStyle={activeStyle}
-      >
+      <NavLink to={"./discussion"} activeStyle={activeStyle}>
         Discussion
       </NavLink>
 
-      <NavLink to={"/device/" + props.id + "/links"} activeStyle={activeStyle}>
+      <NavLink to={"./links"} activeStyle={activeStyle}>
         Links
       </NavLink>
     </aside>

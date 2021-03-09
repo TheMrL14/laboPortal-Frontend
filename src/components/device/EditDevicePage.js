@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { loadDevices, saveDevice } from "../../redux/actions/deviceActions";
 import PropTypes from "prop-types";
 import SideNavDevices from "../devices/SideNavDevices";
-import DeviceForm from "../devices/DeviceForm";
+import DeviceForm from "../device/DeviceForm";
 import { newDevice } from "../../tools/Models";
 
 import "../../style/devices.css";
@@ -17,11 +17,12 @@ export function EditDevicePage({
 }) {
   const [device, setDevice] = useState({ ...props.device });
   const [errors, setErrors] = useState({});
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (devices.length === 0) {
       loadDevices().catch((error) => {
-        alert("Loading courses failed" + error);
+        alert("Loading devices failed" + error);
       });
     } else {
       setDevice({ ...props.device });
@@ -36,11 +37,30 @@ export function EditDevicePage({
     }));
   }
 
+  function formIsValid() {
+    const { title, description } = device;
+    const errors = {};
+
+    if (!title) errors.title = "Title is required.";
+    if (!description) errors.author = "Author is required";
+
+    setErrors(errors);
+    // Form is valid if the errors object still has no properties
+    return Object.keys(errors).length === 0;
+  }
+
   function handleSave(event) {
     event.preventDefault();
-    saveDevice(device).then(() => {
-      history.push("/devices");
-    });
+    if (!formIsValid()) return;
+    setSaving(true);
+    saveDevice(device)
+      .then(() => {
+        history.push("/devices");
+      })
+      .catch((error) => {
+        setSaving(false);
+        setErrors({ onSave: error.message });
+      });
   }
 
   return devices.length === 0 ? (
@@ -53,6 +73,7 @@ export function EditDevicePage({
         errors={errors}
         onChange={handleChange}
         onSave={handleSave}
+        saving={saving}
       />
     </>
   );
@@ -64,7 +85,6 @@ EditDevicePage.propTypes = {
   loadDevices: PropTypes.func.isRequired,
   saveDevice: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
-  //loadSop: PropTypes.function.isRequired,
 };
 
 export function getDeviceBySlug(devices, slug) {
@@ -78,7 +98,6 @@ function mapStateToProps(state, ownProps) {
     slug && state.devices.length > 0
       ? getDeviceBySlug(state.devices, slug)
       : newDevice;
-
   return {
     device,
     devices: state.devices,

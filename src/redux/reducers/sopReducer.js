@@ -1,10 +1,12 @@
-import { CREATE_SOP, LOAD_SOPS_SUCCES } from "../actions/actionTypes";
+import * as types from "../actions/actionTypes";
 
 export default (state = [], action) => {
   switch (action.type) {
-    case CREATE_SOP:
+    case types.CREATE_SOP_SUCCESS:
       return [...state, { ...action.sop }];
-    case LOAD_SOPS_SUCCES:
+    case types.UPDATE_SOP_SUCCESS:
+      return state.map((sop) => (sop.id === action.sop.id ? action.sop : sop));
+    case types.LOAD_SOPS_SUCCES:
       return action.sops;
     default:
       return state;

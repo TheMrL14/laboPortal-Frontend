@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
 import { loadDevices } from "../../redux/actions/deviceActions";
 
-import PropTypes from "prop-types";
-import "../../style/devices.css";
 import DeviceTile from "./DeviceTile";
-import { bindActionCreators } from "redux";
-
 import SideNavDevices from "./SideNavDevices";
+import "../../style/devices.css";
 
-function DevicesPage({ devices, loadDevices, ...props }) {
+function DevicesPage({ devices, loadDevices }) {
   useEffect(() => {
     if (devices.length === 0) {
       loadDevices().catch((error) => {
-        alert("Loading courses failed" + error);
+        alert("Loading devices failed" + error);
       });
     }
   }, []);
@@ -40,7 +39,6 @@ DevicesPage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({ devices: state.devices });
-//TODO : SIMPLIFY
 const mapDispatchToProps = {
   loadDevices,
 };

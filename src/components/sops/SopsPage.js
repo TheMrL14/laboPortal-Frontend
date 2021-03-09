@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
+import { loadSops } from "../../redux/actions/sopActions";
+
 import SideNavSops from "./SideNavSops";
 import SopRow from "./SopRow";
 import "../../style/sops.css";
 
-//https://codepen.io/faaezahmd/pen/dJeRex
-function SopsPage(...props) {
-  const sop = {
-    title: "test",
-    authors: "John Doe, Thomas Smith",
-    creationDate: "27-02-2021",
-  };
+/*
+ *css and html structuire from
+ *https://codepen.io/faaezahmd/pen/dJeRex
+ *
+ */
+
+function SopsPage({ sops, loadSops }) {
+  useEffect(() => {
+    if (sops.length === 0) {
+      loadSops().catch((error) => {
+        alert("Loading courses failed" + error);
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -21,25 +33,24 @@ function SopsPage(...props) {
             <div className="col col-2">Authors</div>
             <div className="col col-3">creation date</div>
           </li>
-          <SopRow sop={sop} />
+          {sops.map((sop) => (
+            <SopRow key={sop.id} sop={sop} />
+          ))}
         </ul>
       </section>
     </>
   );
 }
-/*
+
 SopsPage.propTypes = {
-  //devices: PropTypes.array.isRequired,
-  //actions: PropTypes.object.isRequired,
+  sops: PropTypes.array.isRequired,
+  loadSops: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({ devices: state.devices });
+const mapStateToProps = (state) => ({ sops: state.sops });
 
-//TODO : SIMPLIFY
-const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators(devicesActions, dispatch),
-});
+const mapDispatchToProps = {
+  loadSops,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SopsPage);
-*/
-export default SopsPage;
