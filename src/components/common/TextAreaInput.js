@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { InputTextarea } from "primereact/inputtextarea";
 
 const TextAreaInput = ({
   name,
@@ -18,13 +19,14 @@ const TextAreaInput = ({
     <div className={wrapperClass}>
       <label htmlFor={name}>{label}</label>
       <div className="field">
-        <textarea
-          type="text"
+        <InputTextarea
+          rows={5}
           name={name}
           className="form-control"
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          autoResize
         />
         {error && <div className="alert alert-danger">{error}</div>}
       </div>

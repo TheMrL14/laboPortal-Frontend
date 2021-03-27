@@ -1,25 +1,22 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { FaMicroscope, FaClipboardList } from "react-icons/fa";
 
 const Header = () => {
-  const activeStyle = { background: "#F15B2A" };
   return (
     <header>
       <nav>
-        <NavLink to="/" activeStyle={activeStyle} exact>
-          Home
-        </NavLink>
-        {" | "}
-        <NavLink to="/devices" activeStyle={activeStyle}>
+        <NavLink to="/devices" activeClassName="active">
+          <span className="navLogo">
+            <FaMicroscope />
+          </span>
           Devices
         </NavLink>
-        {" | "}
-        <NavLink to="/sops" activeStyle={activeStyle}>
+        <NavLink to="/sops" activeClassName="active">
+          <span className="navLogo">
+            <FaClipboardList />
+          </span>
           SOPs
-        </NavLink>
-        {" | "}
-        <NavLink to="/about" activeStyle={activeStyle}>
-          About
         </NavLink>
       </nav>
     </header>

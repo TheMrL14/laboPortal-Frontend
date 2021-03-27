@@ -1,0 +1,14 @@
+#qr-result {
+  width: fit-content;
+  height: fit-content;
+}
+
+.qr-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.qr-content button {
+  width: 300px;
+  margin-left: 50px;
+}

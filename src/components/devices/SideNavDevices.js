@@ -1,11 +1,15 @@
 import React from "react";
-
-import "../../style/sidenav.css";
+import { NavLink } from "react-router-dom";
 
 const SideNavDevices = () => {
   return (
     <aside>
-      <a href="/device/create">Add new Device</a>
+      <NavLink to={"/devices"} activeClassName="active" exact>
+        All
+      </NavLink>
+      <NavLink to={"/devices/create"} activeClassName="active" exact>
+        Create device
+      </NavLink>
     </aside>
   );
 };

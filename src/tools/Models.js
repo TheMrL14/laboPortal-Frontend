@@ -9,8 +9,8 @@ const newStep = {
   message: "",
 };
 const newSop = {
-  id: null,
-  title: "",
+  id: 0,
+  title: "New Sop",
   description: "",
   creationDate: "",
   procedure: [newStep],

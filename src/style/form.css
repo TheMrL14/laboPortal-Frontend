@@ -1,11 +1,19 @@
+.form-group {
+  margin-bottom: 1.5em;
+}
+
+.p-tabview {
+  width: 80%;
+}
+
 input,
 textarea {
-  border: none;
-  background: rgba(200, 200, 200, 0.2);
-  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.5rem;
   padding: 0.75rem 1rem;
-  margin: 0.1em;
+  margin: 0.5em 0em;
   width: 80%;
+  color: #495057;
 }
 button {
   border: none;
@@ -21,4 +29,29 @@ button {
 
 .add {
   background-color: darkolivegreen;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  border: none !important;
+}
+
+.p-datatable .p-datatable-tbody > tr:hover {
+  background-color: rgba(241, 91, 42, 0.5) !important;
+}
+
+.sopForm {
+  padding: 1rem;
+  background-color: white;
+  width: 80%;
+  margin: 2rem auto;
+}
+
+.sopForm .top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.sopForm .closeBtn {
+  float: left;
 }

@@ -1,10 +1,15 @@
 import React from "react";
-import "../../style/sidenav.css";
+import { NavLink } from "react-router-dom";
 
 const SideNavSops = () => {
   return (
     <aside>
-      <a href="/device">Add new Sop</a>
+      <NavLink to={"/sops"} activeClassName="active" exact>
+        All Sops
+      </NavLink>
+      <NavLink to={"/sops/create"} activeClassName="active" exact>
+        Create Sop
+      </NavLink>
     </aside>
   );
 };

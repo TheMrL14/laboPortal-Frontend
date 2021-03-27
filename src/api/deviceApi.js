@@ -1,5 +1,5 @@
 import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = "http://localhost:8080/api" + "/devices/";
+const baseUrl = "http://localhost:5000/api" + "/devices/";
 
 export function getDevices() {
   return fetch(baseUrl).then(handleResponse).catch(handleError);

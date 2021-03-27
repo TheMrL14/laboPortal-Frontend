@@ -12,55 +12,63 @@ const SopForm = ({
   onStepChange,
   onStepAdd,
   onStepRemove,
+  closeWindow,
   saving = false,
   errors = {},
 }) => {
   return (
-    <form onSubmit={onSave}>
-      <h2>{sop.id ? "Edit" : "Add"} Sop (Standard Operating Procedures)</h2>
+    <>
+      <form className="sopForm" onSubmit={onSave}>
+        <section className="top">
+          <h2>{sop.id ? "Edit" : "Add"} Sop (Standard Operating Procedures)</h2>
+          <button className="btn btn-delete" onClick={closeWindow}>
+            x
+          </button>
+        </section>
 
-      <TextInput
-        name="title"
-        label="Title"
-        value={sop.title}
-        onChange={onChange}
-        error={errors.title}
-      />
-      <TextAreaInput
-        name="description"
-        label="Description"
-        value={sop.description}
-        onChange={onChange}
-        error={errors.description}
-      />
-      <label>Procedure</label>
-      <div className="box">
-        {sop.procedure.map((step, i) => (
-          <div key={i}>
-            <input
-              onChange={(e) => onStepChange(e, i)}
-              name="message"
-              value={step.message}
-            />
-            {sop.procedure.length !== 1 && (
-              <button onClick={(e) => onStepRemove(e, i)} className="remove">
-                -
-              </button>
-            )}
-            {sop.procedure.length - 1 === i && (
-              <button onClick={onStepAdd} className="add">
-                +
-              </button>
-            )}
-            <br />
-          </div>
-        ))}
-      </div>
+        <TextInput
+          name="title"
+          label="Title"
+          value={sop.title}
+          onChange={onChange}
+          error={errors.title}
+        />
+        <TextAreaInput
+          name="description"
+          label="Description"
+          value={sop.description}
+          onChange={onChange}
+          error={errors.description}
+        />
+        <label>Procedure</label>
+        <div className="box">
+          {sop.procedure.map((step, i) => (
+            <div key={i}>
+              <input
+                onChange={(e) => onStepChange(e, i)}
+                name="message"
+                value={step.message}
+              />
+              {sop.procedure.length !== 1 && (
+                <button onClick={(e) => onStepRemove(e, i)} className="remove">
+                  -
+                </button>
+              )}
+              {sop.procedure.length - 1 === i && (
+                <button onClick={onStepAdd} className="add">
+                  +
+                </button>
+              )}
+              <br />
+            </div>
+          ))}
+        </div>
 
-      <button type="submit" disabled={saving} className="btn btn-primary">
-        {saving ? "Saving..." : "Save"}
-      </button>
-    </form>
+        <button type="submit" disabled={saving} className="btn btn-primary">
+          {saving ? "Saving..." : "Save"}
+        </button>
+      </form>
+    </>
   );
 };
 
@@ -71,6 +79,7 @@ SopForm.propTypes = {
   onChange: PropTypes.func.isRequired,
   onStepChange: PropTypes.func.isRequired,
   onStepAdd: PropTypes.func.isRequired,
+  closeWindow: PropTypes.func,
   onStepRemove: PropTypes.func.isRequired,
   saving: PropTypes.bool,
 };

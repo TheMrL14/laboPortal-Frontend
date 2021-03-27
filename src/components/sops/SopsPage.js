@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import { loadSops } from "../../redux/actions/sopActions";
 
 import SideNavSops from "./SideNavSops";
-import SopRow from "./SopRow";
+
 import "../../style/sops.css";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
 
 /*
  *css and html structuire from
@@ -15,6 +18,8 @@ import "../../style/sops.css";
  */
 
 function SopsPage({ sops, loadSops }) {
+  const history = useHistory();
+
   useEffect(() => {
     if (sops.length === 0) {
       loadSops().catch((error) => {
@@ -23,20 +28,34 @@ function SopsPage({ sops, loadSops }) {
     }
   }, []);
 
+  function onRowSelect(event) {
+    const id = event.data.id;
+
+    history.push("./sops/" + id + "/info");
+  }
+
+  const sopsToSelect = [...sops];
+  if (sops.length > 0) {
+    sopsToSelect.forEach((sop) => {
+      sop.authorsString = sop.authors.map((author) => {
+        return author.firstName + " " + author.lastName;
+      });
+    });
+  }
   return (
     <>
       <SideNavSops />
       <section className="mainContent">
-        <ul className="responsive-table">
-          <li className="table-header">
-            <div className="col col-1">Title</div>
-            <div className="col col-2">Authors</div>
-            <div className="col col-3">creation date</div>
-          </li>
-          {sops.map((sop) => (
-            <SopRow key={sop.id} sop={sop} />
-          ))}
-        </ul>
+        <DataTable
+          value={sopsToSelect}
+          onRowSelect={onRowSelect}
+          selectionMode="single"
+          dataKey="id"
+        >
+          <Column field="title" header="Title"></Column>
+          <Column field="authorsString" ch header="Authors"></Column>
+          <Column field="creationDate" header="Creation Date"></Column>
+        </DataTable>
       </section>
     </>
   );
@@ -47,7 +66,9 @@ SopsPage.propTypes = {
   loadSops: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({ sops: state.sops });
+const mapStateToProps = (state) => ({
+  sops: state.sops,
+});
 
 const mapDispatchToProps = {
   loadSops,

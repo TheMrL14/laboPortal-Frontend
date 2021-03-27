@@ -1,0 +1,37 @@
+.procedure {
+  margin: 0rem 5rem;
+}
+
+ul {
+  padding-left: 0;
+}
+
+.procedure li {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  padding: 2.5rem 1rem;
+  border-bottom: 1px dotted #ced4da;
+}
+
+.procedure li:hover {
+  box-shadow: -0.3rem 0px 0 rgb(241, 91, 42);
+}
+
+.procedure li:hover > .number {
+  color: rgb(241, 91, 42);
+}
+
+.procedure .step {
+  list-style-type: none;
+
+  justify-content: space-between;
+  margin-left: 2rem;
+}
+
+.procedure .number {
+  display: inline-block;
+  font-size: 1.5rem;
+  color: rgb(35, 45, 75);
+  min-width: 4rem;
+}

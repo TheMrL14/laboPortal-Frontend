@@ -3,11 +3,13 @@ import { connect } from "react-redux";
 import { loadDevices } from "../../redux/actions/deviceActions";
 import PropTypes from "prop-types";
 
-import "../../style/sops.css";
+import "../../style/device.css";
 import SideNavDevice from "./SideNavDevice";
 import { newDevice, newSop } from "../../tools/Models";
+import SOPDetail from "../common/SOPDetail";
 
 export function DeviceSopPage({ devices, loadDevices, ...props }) {
+  // eslint-disable-next-line no-unused-vars
   const [device, setDevice] = useState({ ...props.device });
   const [sop, setSop] = useState({ ...props.sop });
 
@@ -33,9 +35,7 @@ export function DeviceSopPage({ devices, loadDevices, ...props }) {
   ) : (
     <>
       <SideNavDevice />
-      <section>
-        <h1>{device.name}</h1>
-      </section>
+      <SOPDetail sop={sop} />
     </>
   );
 }
@@ -57,7 +57,6 @@ function mapStateToProps(state, ownProps) {
     slug && state.devices.length > 0
       ? getDeviceBySlug(state.devices, slug)
       : newDevice;
-  console.log(device.sop);
   const sop = device.sop == undefined ? newSop : device.sop;
   return {
     sop,

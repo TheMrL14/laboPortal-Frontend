@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { FileUpload } from "primereact/fileupload";
 
-import { InputText } from "primereact/inputtext";
-
-const TextInput = ({ name, label, onChange, placeholder, value, error }) => {
+const FileInput = ({ name, label, value, setImage, error }) => {
   let wrapperClass = "form-group";
   if (error && error.length > 0) {
     wrapperClass += " " + "has-error";
@@ -13,11 +12,13 @@ const TextInput = ({ name, label, onChange, placeholder, value, error }) => {
     <div className={wrapperClass}>
       <label htmlFor={name}>{label}</label>
       <div className="field">
-        <InputText
+        <FileUpload
+          mode="basic"
           name={name}
-          className="form-control"
           value={value}
-          onChange={onChange}
+          accept="image/*"
+          maxFileSize={2000000}
+          onSelect={setImage}
         />
         {error && <div className="alert alert-danger">{error}</div>}
       </div>
@@ -25,13 +26,13 @@ const TextInput = ({ name, label, onChange, placeholder, value, error }) => {
   );
 };
 
-TextInput.propTypes = {
+FileInput.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  setImage: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   value: PropTypes.string,
   error: PropTypes.string,
 };
 
-export default TextInput;
+export default FileInput;

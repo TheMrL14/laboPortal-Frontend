@@ -1,21 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { loadDevices, saveDevice } from "../../redux/actions/deviceActions";
+import { loadSops, saveSop } from "../../redux/actions/sopActions";
 import PropTypes from "prop-types";
 import SideNavDevices from "../devices/SideNavDevices";
 import DeviceForm from "../device/DeviceForm";
-import { newDevice } from "../../tools/Models";
+import { newDevice, newSop } from "../../tools/Models";
 
 import "../../style/devices.css";
 import SideNavDevice from "./SideNavDevice";
+
+import { EditSopPage } from "../sop/EditSopPage";
+
 export function EditDevicePage({
   devices,
   loadDevices,
   saveDevice,
+  sops,
+  loadSops,
+  saveSop,
   history,
   ...props
 }) {
+  const [isNewSop, setIsNewSop] = useState(false);
   const [device, setDevice] = useState({ ...props.device });
+  const [sop, setSop] = useState({ ...props.device });
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
 
@@ -26,8 +35,18 @@ export function EditDevicePage({
       });
     } else {
       setDevice({ ...props.device });
+      setSop({ ...props.device.sop });
     }
-  }, [props.device]);
+
+    if (sops.length === 0) {
+      loadSops().catch((error) => {
+        alert("Loading Sops failed" + error);
+      });
+    } else {
+      console.log("ja");
+      setSop({ ...props.sop });
+    }
+  }, [props.device, props.sop]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -38,10 +57,10 @@ export function EditDevicePage({
   }
 
   function formIsValid() {
-    const { title, description } = device;
+    const { name, description } = device;
     const errors = {};
 
-    if (!title) errors.title = "Title is required.";
+    if (!name) errors.title = "Title is required.";
     if (!description) errors.author = "Author is required";
 
     setErrors(errors);
@@ -50,9 +69,13 @@ export function EditDevicePage({
   }
 
   function handleSave(event) {
+    console.log(device);
     event.preventDefault();
+
     if (!formIsValid()) return;
     setSaving(true);
+
+    device.sop = sop;
     saveDevice(device)
       .then(() => {
         history.push("/devices");
@@ -63,18 +86,60 @@ export function EditDevicePage({
       });
   }
 
-  return devices.length === 0 ? (
-    <h1>Loading</h1>
-  ) : (
+  function setSelectedSop(selected) {
+    if (selected.id == 0) setIsNewSop(true);
+    else setIsNewSop(false);
+    setSop({ ...selected });
+  }
+
+  function handleSopSave(sop) {
+    saveSop(sop)
+      .then(() => {
+        setIsNewSop(false);
+      })
+      .catch((error) => {
+        setSaving(false);
+        setErrors({ onSave: error.message });
+      });
+  }
+
+  function closeOverlay(e) {
+    e.preventDefault();
+    setIsNewSop(false);
+    setSop(null);
+  }
+
+  const sopsToSelect = [...sops];
+  sopsToSelect.unshift(newSop);
+  return (
     <>
       {device.id ? <SideNavDevice /> : <SideNavDevices />}
-      <DeviceForm
-        device={device}
-        errors={errors}
-        onChange={handleChange}
-        onSave={handleSave}
-        saving={saving}
-      />
+      <section>
+        <DeviceForm
+          device={device}
+          sop={sop}
+          sops={sopsToSelect}
+          errors={errors}
+          onChange={handleChange}
+          onSave={handleSave}
+          setSelectedSop={setSelectedSop}
+          saving={saving}
+          isNewSop={isNewSop}
+        />
+        {isNewSop ? (
+          <section className="overlay">
+            <EditSopPage
+              sop={sop}
+              sops={sops}
+              isForm={true}
+              loadSops={loadSops}
+              saveSop={handleSopSave}
+              history={history}
+              closeWindow={closeOverlay}
+            />
+          </section>
+        ) : null}
+      </section>
     </>
   );
 }
@@ -82,8 +147,16 @@ export function EditDevicePage({
 EditDevicePage.propTypes = {
   device: PropTypes.object.isRequired,
   devices: PropTypes.array.isRequired,
+
   loadDevices: PropTypes.func.isRequired,
   saveDevice: PropTypes.func.isRequired,
+
+  sop: PropTypes.object,
+  sops: PropTypes.array.isRequired,
+
+  loadSops: PropTypes.func.isRequired,
+  saveSop: PropTypes.func.isRequired,
+
   history: PropTypes.object.isRequired,
 };
 
@@ -93,12 +166,16 @@ export function getDeviceBySlug(devices, slug) {
 
 function mapStateToProps(state, ownProps) {
   const slug = ownProps.match.params.slug;
-  console.log(slug && state.devices.length > 0);
   const device =
     slug && state.devices.length > 0
       ? getDeviceBySlug(state.devices, slug)
       : newDevice;
+
+  const sop = device.sop == undefined ? newSop : device.sop;
+
   return {
+    sop,
+    sops: state.sops,
     device,
     devices: state.devices,
   };
@@ -107,6 +184,8 @@ function mapStateToProps(state, ownProps) {
 const mapDispatchToProps = {
   loadDevices,
   saveDevice,
+  loadSops,
+  saveSop,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditDevicePage);

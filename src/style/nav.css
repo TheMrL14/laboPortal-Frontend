@@ -1,0 +1,49 @@
+header nav{
+  background: rgb(35, 45, 75);
+  position: fixed;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 8rem;
+  min-width: 6%;
+  padding-top: 2rem;
+  
+}
+
+header nav a {
+  font-size: 1.1rem;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+  padding: 2rem 1em;
+}
+
+nav span.navLogo{
+  margin: 1rem;
+
+}
+
+header a.active{
+  background-color: rgb(241, 91, 42);
+}
+
+aside {
+  display: flex !important;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+   
+}
+
+aside a {
+  font-size: 1.2rem;
+  margin: 1em;
+  color: rgb(241, 91, 42);
+  text-decoration: none;
+}
+
+aside a.active{
+  color: rgb(241, 91, 42);
+  padding-left: 0.5rem;
+  border-left: solid rgb(241, 91, 42);
+}

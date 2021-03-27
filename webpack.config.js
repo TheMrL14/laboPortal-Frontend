@@ -36,8 +36,16 @@ module.exports = {
         use: ["babel-loader", "eslint-loader"],
       },
       {
-        test: /(\.css)$/,
+        test: /\.(s*)css$/,
         use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        loader: "url-loader?limit=100000",
+      },
+      {
+        test: /\.(ico|jpe?g|png|gif|webp|svg|mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
+        loader: "file-loader",
       },
     ],
   },

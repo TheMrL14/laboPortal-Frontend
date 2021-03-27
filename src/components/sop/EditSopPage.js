@@ -7,8 +7,16 @@ import SopForm from "../sop/SopForm";
 import { newSop } from "../../tools/Models";
 
 import "../../style/sops.css";
+import SideNavSop from "./SideNavSop";
 
-export function EditSopPage({ sops, loadSops, saveSop, history, ...props }) {
+export function EditSopPage({
+  sops,
+  loadSops,
+  saveSop,
+  history,
+  closeWindow,
+  ...props
+}) {
   const [sop, setSop] = useState({ ...props.sop });
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
@@ -29,7 +37,6 @@ export function EditSopPage({ sops, loadSops, saveSop, history, ...props }) {
       ...prevSop,
       [name]: name === "sopId" ? parseInt(value, 10) : value,
     }));
-    console.log(sop);
   }
 
   const handleStepChange = (e, index) => {
@@ -37,7 +44,6 @@ export function EditSopPage({ sops, loadSops, saveSop, history, ...props }) {
     const list = [...sop.procedure];
     list[index]["message"] = value;
     list[index]["stepNr"] = index + 1;
-    console.log(sop);
     setSop((prevSop) => ({
       ...prevSop,
       ["procedure"]: list,
@@ -61,7 +67,6 @@ export function EditSopPage({ sops, loadSops, saveSop, history, ...props }) {
         { stepNr: sop.procedure.length + 1, message: "" },
       ],
     }));
-    console.log(sop);
   };
 
   function formIsValid() {
@@ -79,22 +84,23 @@ export function EditSopPage({ sops, loadSops, saveSop, history, ...props }) {
   function handleSave(event) {
     event.preventDefault();
     if (!formIsValid()) return;
-    setSaving(true);
-    saveSop(sop)
-      .then(() => {
-        history.push("/sops");
-      })
-      .catch((error) => {
-        setSaving(false);
-        setErrors({ onSave: error.message });
-      });
+    if (props.isForm) saveSop(sop);
+    else {
+      setSaving(true);
+      saveSop(sop)
+        .then(() => {
+          history.push("/sops");
+        })
+        .catch((error) => {
+          setSaving(false);
+          setErrors({ onSave: error.message });
+        });
+    }
   }
 
-  return sops.length === 0 ? (
-    <h1>Loading</h1>
-  ) : (
+  return (
     <>
-      <SideNavSops />
+      {!props.isForm ? <SideNavSop /> : null}
       <SopForm
         sop={sop}
         errors={errors}
@@ -104,12 +110,14 @@ export function EditSopPage({ sops, loadSops, saveSop, history, ...props }) {
         onStepRemove={handleRemoveClick}
         onSave={handleSave}
         saving={saving}
+        closeWindow={closeWindow}
       />
     </>
   );
 }
 
 EditSopPage.propTypes = {
+  isForm: PropTypes.bool,
   sop: PropTypes.object.isRequired,
   sops: PropTypes.array.isRequired,
   loadSops: PropTypes.func.isRequired,
