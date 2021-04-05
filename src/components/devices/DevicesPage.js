@@ -21,13 +21,11 @@ function DevicesPage({ devices, loadDevices }) {
     <>
       <SideNavDevices />
       <section className="mainContent">
-        <div className="centered">
-          <section className="cards">
-            {devices.map((device) => (
-              <DeviceTile key={device.name} device={device} />
-            ))}
-          </section>
-        </div>
+        <section className="p-grid">
+          {devices.map((device) => (
+            <DeviceTile key={device.name} device={device} />
+          ))}
+        </section>
       </section>
     </>
   );

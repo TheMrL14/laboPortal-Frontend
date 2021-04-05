@@ -4,6 +4,7 @@ import TextInput from "../common/TextInput";
 import TextAreaInput from "../common/TextAreaInput";
 import { Dropdown } from "primereact/dropdown";
 import FileInput from "../common/FileInput";
+import { FetchByteArray } from "../common/Utils";
 
 const DeviceForm = ({
   device,
@@ -17,23 +18,11 @@ const DeviceForm = ({
   errors = {},
 }) => {
   const setImage = (e) => {
-    let reader = new FileReader();
-    let file = e.files[0];
-    var fileByteArray = [];
-    console.log("Saving: " + file.name);
-    reader.readAsArrayBuffer(file);
-    reader.onload = (evt) => {
-      if (evt.target.readyState == FileReader.DONE) {
-        var arrayBuffer = evt.target.result,
-          array = new Uint8Array(arrayBuffer);
-        for (var i = 0; i < array.length; i++) {
-          fileByteArray.push(array[i]);
-        }
-      }
-      console.log(fileByteArray);
-      device.imageName = file.name;
-      device.image = fileByteArray;
-    };
+    const file = e.files[0];
+    device.imageName = file.name;
+    FetchByteArray(file).then(
+      (fileByteArray) => (device.image = fileByteArray)
+    );
   };
 
   return (

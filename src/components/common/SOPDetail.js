@@ -1,16 +1,29 @@
 import React from "react";
+import PropTypes from "prop-types";
 
+import { Tag } from "primereact/tag";
 import "../../style/sop.css";
 
 const SOPDetail = (props) => (
-  <section className="procedure">
+  <section className="procedure mainContent">
     <h2>{props.sop.title}</h2>
-    <p>{props.sop.creationDate}</p>
+    {props.sop.abbreviations.map((tag, i) => (
+      <abbr className="p-mr-2" key={i} title={tag.description}>
+        <Tag value={tag.abbreviation} />
+      </abbr>
+    ))}
+
     <p>{props.sop.description}</p>
     <ul>
       {props.sop.procedure.map((step, i) => (
         <li key={i}>
           <span className="number">{step.stepNr}</span>
+          {step.image ? (
+            <img
+              className="imgStep"
+              src={`data:image/jpeg;base64,${step.image}`}
+            ></img>
+          ) : null}
           <span className="step">{step.message}</span>
         </li>
       ))}
@@ -19,3 +32,7 @@ const SOPDetail = (props) => (
 );
 
 export default SOPDetail;
+
+SOPDetail.propTypes = {
+  sop: PropTypes.object.isRequired,
+};

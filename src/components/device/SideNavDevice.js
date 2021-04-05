@@ -1,34 +1,38 @@
 import React from "react";
+import SideNav from "../common/SideNav";
 
-import { NavLink } from "react-router-dom";
-
-const SideNavDevice = () => {
-  return (
-    <aside>
-      <NavLink to={"./info"} activeClassName="active" exact>
-        Info
-      </NavLink>
-      <NavLink to={"./edit"} activeClassName="active" exact>
-        Edit
-      </NavLink>
-
-      <NavLink to={"./sop"} activeClassName="active">
-        SOP
-      </NavLink>
-
-      <NavLink to={"./discussion"} activeClassName="active">
-        Discussion
-      </NavLink>
-
-      <NavLink to={"./code"} activeClassName="active">
-        Generate QR code
-      </NavLink>
-
-      <NavLink to={"./links"} activeClassName="active">
-        Links
-      </NavLink>
-    </aside>
-  );
-};
+const nav = [
+  {
+    id: "1",
+    url: "./info",
+    title: "Details",
+    isVisable: true,
+  },
+  {
+    id: "2",
+    url: "./edit",
+    title: "Edit",
+    isVisable: true,
+  },
+  {
+    id: "3",
+    url: "./sop",
+    title: "SOP",
+    isVisable: true,
+  },
+  {
+    id: "4",
+    url: "./discussion",
+    title: " Discussion",
+    isVisable: false,
+  },
+  {
+    id: "5",
+    url: "./code",
+    title: " Generate QR code",
+    isVisable: true,
+  },
+];
+const SideNavDevice = () => <SideNav links={nav} />;
 
 export default SideNavDevice;

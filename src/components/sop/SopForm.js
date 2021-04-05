@@ -4,6 +4,9 @@ import TextInput from "../common/TextInput";
 import TextAreaInput from "../common/TextAreaInput";
 
 import "../../style/form.css";
+import { FetchByteArray } from "../common/Utils";
+import StepInput from "../common/StepInput";
+import AbbrInput from "../common/AbbrInput";
 
 const SopForm = ({
   sop,
@@ -12,18 +15,33 @@ const SopForm = ({
   onStepChange,
   onStepAdd,
   onStepRemove,
+  onAbbreviationChange,
+  onAbbreviationAdd,
+  onAbbreviationRemove,
   closeWindow,
   saving = false,
   errors = {},
 }) => {
+  const setImage = (e, i) => {
+    const file = e.files[0];
+    let step = sop.procedure[i];
+    step.imageName = file.name;
+    FetchByteArray(file).then((fileByteArray) => (step.image = fileByteArray));
+  };
   return (
     <>
-      <form className="sopForm" onSubmit={onSave}>
+      <form
+        className="sopForm"
+        onSubmit={onSave}
+        style={closeWindow ? { width: "80%", padding: "2rem" } : {}}
+      >
         <section className="top">
           <h2>{sop.id ? "Edit" : "Add"} Sop (Standard Operating Procedures)</h2>
-          <button className="btn btn-delete" onClick={closeWindow}>
-            x
-          </button>
+          {closeWindow ? (
+            <button className="btn btn-delete" onClick={closeWindow}>
+              x
+            </button>
+          ) : null}
         </section>
 
         <TextInput
@@ -40,30 +58,23 @@ const SopForm = ({
           onChange={onChange}
           error={errors.description}
         />
-        <label>Procedure</label>
-        <div className="box">
-          {sop.procedure.map((step, i) => (
-            <div key={i}>
-              <input
-                onChange={(e) => onStepChange(e, i)}
-                name="message"
-                value={step.message}
-              />
-              {sop.procedure.length !== 1 && (
-                <button onClick={(e) => onStepRemove(e, i)} className="remove">
-                  -
-                </button>
-              )}
-              {sop.procedure.length - 1 === i && (
-                <button onClick={onStepAdd} className="add">
-                  +
-                </button>
-              )}
-              <br />
-            </div>
-          ))}
-        </div>
-
+        <AbbrInput
+          name="Abbreviations"
+          steps={sop.abbreviations}
+          onStepChange={onAbbreviationChange}
+          onStepAdd={onAbbreviationAdd}
+          onStepRemove={onAbbreviationRemove}
+          setImage={setImage}
+        />
+        <StepInput
+          name="Procedure"
+          errors={errors}
+          steps={sop.procedure}
+          onStepChange={onStepChange}
+          onStepAdd={onStepAdd}
+          onStepRemove={onStepRemove}
+          setImage={setImage}
+        />
         <button type="submit" disabled={saving} className="btn btn-primary">
           {saving ? "Saving..." : "Save"}
         </button>

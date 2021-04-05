@@ -10,13 +10,13 @@ const Header = () => {
           <span className="navLogo">
             <FaMicroscope />
           </span>
-          Devices
+          <span className="navTitle">Devices</span>
         </NavLink>
         <NavLink to="/sops" activeClassName="active">
           <span className="navLogo">
             <FaClipboardList />
           </span>
-          SOPs
+          <span className="navTitle">Sops</span>
         </NavLink>
       </nav>
     </header>

@@ -53,6 +53,7 @@ export function EditSopPage({
   // handle click event of the Remove button
   const handleRemoveClick = (index) => {
     const list = [...sop.procedure];
+    console.log(index);
     list.splice(index, 1);
     setSop((prevSop) => ({
       ...prevSop,
@@ -65,6 +66,36 @@ export function EditSopPage({
       ["procedure"]: [
         ...prevSop.procedure,
         { stepNr: sop.procedure.length + 1, message: "" },
+      ],
+    }));
+  };
+
+  const handleAbbreviationChange = (e, index) => {
+    const { value } = e.target;
+    const list = [...sop.abbreviations];
+    list[index][e.target.name] = value;
+    setSop((prevSop) => ({
+      ...prevSop,
+      ["abbreviations"]: list,
+    }));
+    console.log(sop);
+  };
+
+  // handle click event of the Remove button
+  const handleAbbreviationRemove = (index) => {
+    const list = [...sop.abbreviations];
+    list.splice(index, 1);
+    setSop((prevSop) => ({
+      ...prevSop,
+      ["abbreviations"]: list,
+    }));
+  };
+  const handleAbbreviationAdd = () => {
+    setSop((prevSop) => ({
+      ...prevSop,
+      ["abbreviations"]: [
+        ...prevSop.abbreviations,
+        { abbreviation: "", description: "" },
       ],
     }));
   };
@@ -84,6 +115,7 @@ export function EditSopPage({
   function handleSave(event) {
     event.preventDefault();
     if (!formIsValid()) return;
+    console.log(sop);
     if (props.isForm) saveSop(sop);
     else {
       setSaving(true);
@@ -100,18 +132,23 @@ export function EditSopPage({
 
   return (
     <>
-      {!props.isForm ? <SideNavSop /> : null}
-      <SopForm
-        sop={sop}
-        errors={errors}
-        onChange={handleChange}
-        onStepChange={handleStepChange}
-        onStepAdd={handleAddClick}
-        onStepRemove={handleRemoveClick}
-        onSave={handleSave}
-        saving={saving}
-        closeWindow={closeWindow}
-      />
+      {!props.isForm ? sop.id ? <SideNavSop /> : <SideNavSops /> : null}
+      <section className="mainContent">
+        <SopForm
+          sop={sop}
+          errors={errors}
+          onChange={handleChange}
+          onStepChange={handleStepChange}
+          onStepAdd={handleAddClick}
+          onStepRemove={handleRemoveClick}
+          onAbbreviationChange={handleAbbreviationChange}
+          onAbbreviationAdd={handleAbbreviationAdd}
+          onAbbreviationRemove={handleAbbreviationRemove}
+          onSave={handleSave}
+          saving={saving}
+          closeWindow={closeWindow}
+        />
+      </section>
     </>
   );
 }

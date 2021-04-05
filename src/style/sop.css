@@ -1,7 +1,3 @@
-.procedure {
-  margin: 0rem 5rem;
-}
-
 ul {
   padding-left: 0;
 }
@@ -34,4 +30,8 @@ ul {
   font-size: 1.5rem;
   color: rgb(35, 45, 75);
   min-width: 4rem;
+}
+
+.imgStep {
+  height: 20rem;
 }

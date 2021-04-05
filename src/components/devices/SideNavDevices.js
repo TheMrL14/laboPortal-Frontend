@@ -1,17 +1,23 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import SideNav from "../common/SideNav";
+
+const nav = [
+  {
+    id: "1",
+    url: "/devices",
+    title: "All Devices",
+    isVisable: true,
+  },
+  {
+    id: "2",
+    url: "/devices/create",
+    title: "Create Device",
+    isVisable: true,
+  },
+];
 
 const SideNavDevices = () => {
-  return (
-    <aside>
-      <NavLink to={"/devices"} activeClassName="active" exact>
-        All
-      </NavLink>
-      <NavLink to={"/devices/create"} activeClassName="active" exact>
-        Create device
-      </NavLink>
-    </aside>
-  );
+  return <SideNav links={nav} />;
 };
 
 export default SideNavDevices;
