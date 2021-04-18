@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FileInputIcon from "./FileInputIcon";
-import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 
 const StepInput = ({

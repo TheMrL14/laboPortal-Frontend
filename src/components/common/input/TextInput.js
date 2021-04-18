@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import { InputText } from "primereact/inputtext";
 
-const TextInput = ({ name, label, onChange, placeholder, value, error }) => {
+const TextInput = ({ name, label, onChange, value, error }) => {
   let wrapperClass = "form-group";
   if (error && error.length > 0) {
     wrapperClass += " " + "has-error";

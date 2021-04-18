@@ -23,7 +23,3 @@ DeviceTile.propTypes = {
 };
 
 export default DeviceTile;
-
-/*
-
-*/

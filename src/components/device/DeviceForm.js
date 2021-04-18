@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TextInput from "../common/TextInput";
-import TextAreaInput from "../common/TextAreaInput";
+import TextInput from "../common/input/TextInput";
+import TextAreaInput from "../common/input/TextAreaInput";
 import { Dropdown } from "primereact/dropdown";
-import FileInput from "../common/FileInput";
+import FileInput from "../common/input/FileInput";
 import { FetchByteArray } from "../common/Utils";
 
 const DeviceForm = ({

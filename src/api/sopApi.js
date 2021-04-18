@@ -1,22 +1,19 @@
-import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = "http://localhost:5000/api" + "/sops/";
+import {
+  authenticatedDeleteRequest,
+  authenticatedPostRequest,
+  getRequest,
+} from "./apiUtils";
+
+const endpoint = "/sops/";
 
 export function getSops() {
-  return fetch(baseUrl).then(handleResponse).catch(handleError);
+  return getRequest(endpoint);
 }
 
 export function saveSop(sop) {
-  return fetch(baseUrl + (sop.id || ""), {
-    method: sop.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(sop),
-  })
-    .then(handleResponse)
-    .catch(handleError);
+  return authenticatedPostRequest(endpoint, sop);
 }
 
 export function deleteSop(id) {
-  return fetch(baseUrl + id, { method: "DELETE" })
-    .then(handleResponse)
-    .catch(handleError);
+  return authenticatedDeleteRequest(endpoint, id);
 }

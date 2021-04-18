@@ -1,7 +1,7 @@
 export function FetchByteArray(file) {
   let reader = new FileReader();
   var fileByteArray = [];
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     reader.readAsArrayBuffer(file);
     reader.onload = (evt) => {
       if (evt.target.readyState == FileReader.DONE) {

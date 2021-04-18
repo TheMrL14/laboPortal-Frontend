@@ -1,5 +1,7 @@
 import React from "react";
-import SideNav from "../common/SideNav";
+import SideNav from "../common/navigation/SideNav";
+
+import * as AuthService from "../../auth/Auth";
 
 const nav = [
   {
@@ -12,7 +14,7 @@ const nav = [
     id: "2",
     url: "./edit",
     title: "Edit",
-    isVisable: true,
+    isVisable: AuthService.isLoggedIn(),
   },
   {
     id: "3",
@@ -24,7 +26,7 @@ const nav = [
     id: "4",
     url: "./discussion",
     title: " Discussion",
-    isVisable: false,
+    isVisable: AuthService.isLoggedIn(),
   },
   {
     id: "5",

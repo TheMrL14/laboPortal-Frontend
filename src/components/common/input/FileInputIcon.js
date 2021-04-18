@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { FileUpload } from "primereact/fileupload";
 
-const FileInputIcon = ({ name, label, value, setImage, error }) => {
+const FileInputIcon = ({ name, value, setImage, error }) => {
   return (
     <>
       <FileUpload

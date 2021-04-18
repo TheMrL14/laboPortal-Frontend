@@ -1,5 +1,7 @@
 import React from "react";
-import SideNav from "../common/SideNav";
+import SideNav from "../common/navigation/SideNav";
+
+import * as AuthService from "../../auth/Auth";
 
 const nav = [
   {
@@ -12,7 +14,7 @@ const nav = [
     id: "2",
     url: "/sops/create",
     title: "Create Sop",
-    isVisable: true,
+    isVisable: AuthService.isLoggedIn(),
   },
 ];
 const SideNavSops = () => <SideNav links={nav} />;

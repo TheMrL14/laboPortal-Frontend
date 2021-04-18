@@ -4,9 +4,9 @@ import { loadSops, saveSop } from "../../redux/actions/sopActions";
 import PropTypes from "prop-types";
 import SideNavSop from "./SideNavSop";
 import { newSop } from "../../tools/Models";
-import SOPDetail from "../common/SOPDetail";
+import SOPDetail from "./SOPDetail";
 
-export function SopDetailPage({ sops, loadSops, ...props }) {
+function SopDetailPage({ sops, loadSops, ...props }) {
   const [sop, setSop] = useState({ ...props.sop });
 
   useEffect(() => {

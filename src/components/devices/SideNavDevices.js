@@ -1,5 +1,6 @@
 import React from "react";
-import SideNav from "../common/SideNav";
+import SideNav from "../common/navigation/SideNav";
+import * as AuthService from "../../auth/Auth";
 
 const nav = [
   {
@@ -12,7 +13,7 @@ const nav = [
     id: "2",
     url: "/devices/create",
     title: "Create Device",
-    isVisable: true,
+    isVisable: AuthService.isLoggedIn(),
   },
 ];
 

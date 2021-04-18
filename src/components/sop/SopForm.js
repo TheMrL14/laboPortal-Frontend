@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TextInput from "../common/TextInput";
-import TextAreaInput from "../common/TextAreaInput";
+import TextInput from "../common/input/TextInput";
+import TextAreaInput from "../common/input/TextAreaInput";
 
 import "../../style/form.css";
 import { FetchByteArray } from "../common/Utils";
-import StepInput from "../common/StepInput";
-import AbbrInput from "../common/AbbrInput";
+import StepInput from "../common/input/StepInput";
+import AbbrInput from "../common/input/AbbrInput";
 
 const SopForm = ({
   sop,
@@ -90,6 +90,10 @@ SopForm.propTypes = {
   onChange: PropTypes.func.isRequired,
   onStepChange: PropTypes.func.isRequired,
   onStepAdd: PropTypes.func.isRequired,
+
+  onAbbreviationChange: PropTypes.func.isRequired,
+  onAbbreviationAdd: PropTypes.func.isRequired,
+  onAbbreviationRemove: PropTypes.func.isRequired,
   closeWindow: PropTypes.func,
   onStepRemove: PropTypes.func.isRequired,
   saving: PropTypes.bool,

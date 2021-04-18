@@ -1,6 +1,7 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import SideNav from "../common/SideNav";
+import SideNav from "../common/navigation/SideNav";
+
+import * as AuthService from "../../auth/Auth";
 
 const nav = [
   {
@@ -13,7 +14,7 @@ const nav = [
     id: "2",
     url: "./edit",
     title: "Edit",
-    isVisable: true,
+    isVisable: AuthService.isLoggedIn(),
   },
 ];
 const SideNavSop = () => <SideNav links={nav} />;

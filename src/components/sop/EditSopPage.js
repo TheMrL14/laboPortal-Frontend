@@ -155,6 +155,7 @@ export function EditSopPage({
 
 EditSopPage.propTypes = {
   isForm: PropTypes.bool,
+  closeWindow: PropTypes.bool,
   sop: PropTypes.object.isRequired,
   sops: PropTypes.array.isRequired,
   loadSops: PropTypes.func.isRequired,

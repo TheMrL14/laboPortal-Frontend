@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import "../../style/device.css";
 import SideNavDevice from "./SideNavDevice";
 import { newDevice, newSop } from "../../tools/Models";
-import SOPDetail from "../common/SOPDetail";
+import SOPDetail from "../sop/SOPDetail";
 
 export function DeviceSopPage({ devices, loadDevices, ...props }) {
   // eslint-disable-next-line no-unused-vars

@@ -26,7 +26,7 @@ export function loadDevices() {
 
 export function saveDevice(device) {
   //eslint-disable-next-line no-unused-vars
-  return function (dispatch, getState) {
+  return function (dispatch) {
     return deviceApi
       .saveDevice(device)
       .then((savedCourse) => {
