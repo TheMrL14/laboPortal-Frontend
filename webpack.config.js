@@ -35,6 +35,12 @@ module.exports = {
       template: "src/index.html",
       favicon: "src/favicon.ico",
     }),
+    new webpack.EnvironmentPlugin({
+      REACT_APP_AUTH0_CLIENT_ID: null,
+      REACT_APP_AUTH0_DOMAIN: null,
+      REACT_APP_ROOT_ENDPOINT: null,
+      REACT_APP_API_ROOT_ENDPOINT: null,
+    }),
   ],
   module: {
     rules: [
