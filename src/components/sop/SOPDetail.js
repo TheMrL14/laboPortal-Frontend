@@ -19,7 +19,6 @@ const SOPDetail = (props) => {
       <ul>
         {props.sop.procedure.map((step, i) => (
           <li key={i}>
-            <span className="number">{step.stepNr}</span>
             {step.image ? (
               <img
                 className="imgStep"
