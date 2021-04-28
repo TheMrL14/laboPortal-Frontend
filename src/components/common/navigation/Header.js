@@ -74,19 +74,10 @@ class Header extends Component {
   };
 }
 
-const mapStateToProps = ({ auth }) => ({
-  auth,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  loginRequest: (profile) => dispatch(authActions.loginRequest(profile)),
-  logoutSuccess: (profile) => dispatch(authActions.logoutSucces(profile)),
-});
-
 Header.propTypes = {
   auth: PropTypes.object.isRequired,
   loginRequest: PropTypes.func.isRequired,
   logoutSuccess: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

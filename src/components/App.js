@@ -51,17 +51,33 @@ class App extends Component {
   render = () => {
     return (
       <>
-        <Header />
+        <Header {...this.props} />
 
         <main>
           <Switch>
             <Route exact path="/" component={HomePage} />
 
-            <PrivateRoute path="/devices/:slug/edit" component={EditDevice} />
-            <PrivateRoute path="/devices/create" component={EditDevice} />
+            <PrivateRoute
+              path="/devices/:slug/edit"
+              component={EditDevice}
+              {...this.props}
+            />
+            <PrivateRoute
+              path="/devices/create"
+              component={EditDevice}
+              {...this.props}
+            />
 
-            <PrivateRoute path="/sops/:slug/edit" component={EditSop} />
-            <PrivateRoute path="/sops/create" component={EditSop} />
+            <PrivateRoute
+              path="/sops/:slug/edit"
+              component={EditSop}
+              {...this.props}
+            />
+            <PrivateRoute
+              path="/sops/create"
+              component={EditSop}
+              {...this.props}
+            />
 
             <Route path="/devices/:slug/code" component={DeviceCode} />
             <Route path="/devices/:slug/info" component={EditDevice} />
@@ -79,14 +95,18 @@ class App extends Component {
 }
 
 App.propTypes = {
+  auth: PropTypes.object.isRequired,
+  loginRequest: PropTypes.func.isRequired,
   loginError: PropTypes.func.isRequired,
   loginSuccess: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ auth }) => ({ auth });
 
 const mapDispatchToProps = (dispatch) => ({
+  loginRequest: (profile) => dispatch(authActions.loginRequest(profile)),
   loginSuccess: (profile) => dispatch(authActions.loginSuccess(profile)),
+  logoutSuccess: (profile) => dispatch(authActions.logoutSucces(profile)),
   loginError: (error) => dispatch(authActions.loginError(error)),
 });
 

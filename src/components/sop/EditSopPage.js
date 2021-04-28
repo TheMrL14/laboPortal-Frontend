@@ -4,10 +4,11 @@ import { loadSops, saveSop } from "../../redux/actions/sopActions";
 import PropTypes from "prop-types";
 import SideNavSops from "../sops/SideNavSops";
 import SopForm from "../sop/SopForm";
-import { newSop } from "../../tools/Models";
+import { newSop, newAbbreviation } from "../../tools/Models";
 
 import "../../style/sops.css";
 import SideNavSop from "./SideNavSop";
+import { withRouter } from "react-router";
 
 export function EditSopPage({
   sops,
@@ -53,7 +54,7 @@ export function EditSopPage({
   // handle click event of the Remove button
   const handleRemoveClick = (index) => {
     const list = [...sop.procedure];
-    console.log(index);
+
     list.splice(index, 1);
     setSop((prevSop) => ({
       ...prevSop,
@@ -78,7 +79,6 @@ export function EditSopPage({
       ...prevSop,
       ["abbreviations"]: list,
     }));
-    console.log(sop);
   };
 
   // handle click event of the Remove button
@@ -115,7 +115,7 @@ export function EditSopPage({
   function handleSave(event) {
     event.preventDefault();
     if (!formIsValid()) return;
-    console.log(sop);
+
     if (props.isForm) saveSop(sop);
     else {
       setSaving(true);
@@ -129,7 +129,7 @@ export function EditSopPage({
         });
     }
   }
-
+  console.log(sop);
   return (
     <>
       {!props.isForm ? sop.id ? <SideNavSop /> : <SideNavSops /> : null}
@@ -167,10 +167,12 @@ export function getSopBySlug(sops, slug) {
   return sops.find((sop) => sop.id === parseInt(slug)) || null;
 }
 
-function mapStateToProps(state, ownProps) {
-  const slug = ownProps.match.params.slug;
+function mapStateToProps(state, props) {
+  const slug = props.match.params.slug;
   const sop =
     slug && state.sops.length > 0 ? getSopBySlug(state.sops, slug) : newSop;
+  sop.abbreviations =
+    sop.abbreviations.length > 0 ? sop.abbreviations : [newAbbreviation];
   return {
     sop,
     sops: state.sops,
@@ -182,4 +184,6 @@ const mapDispatchToProps = {
   saveSop,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditSopPage);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(EditSopPage)
+);

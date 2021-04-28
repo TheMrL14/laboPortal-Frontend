@@ -1,21 +1,25 @@
 //src : https://app.pluralsight.com/library/courses/react-auth0-authentication-security
 
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Route } from "react-router";
 
-const PrivateRoute = (props) => {
-  const { isAuthenticated, auth } = props;
+import * as AuthService from "../../../auth/Auth";
 
-  const login = () => props.login();
+const PrivateRoute = (props) => {
+  const { auth, component: Component } = props;
 
   return (
     <Route
+      {...props}
       render={(props) => {
+        console.log(props);
         // 1. Redirect to login if not logged in.
-        if (!isAuthenticated) return login();
+        if (!auth.isAuthenticated) {
+          AuthService.login();
 
+          return null;
+        }
         /*   
         // 2. Display message if user lacks required scope(s).
         if (scopes.length > 0 && !auth.userHasScopes(scopes)) {
@@ -27,29 +31,18 @@ const PrivateRoute = (props) => {
           );
         }
         */
-
         // 3. Render component
+
         return <Component auth={auth} {...props} />;
       }}
     />
   );
 };
 
-function mapStateToProps(state) {
-  const { auth } = state;
-  const { isAuthenticated, scopes } = auth;
-  return {
-    auth,
-    isAuthenticated,
-    scopes,
-  };
-}
-
 PrivateRoute.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
   auth: PropTypes.object.isRequired,
-  login: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
+  component: PropTypes.object,
+  loginRequest: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, {})(PrivateRoute);
+export default PrivateRoute;

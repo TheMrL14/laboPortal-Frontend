@@ -10,7 +10,7 @@ const authReducer = (
   state = {
     isAuthenticated: !AuthService.isTokenExpired(),
     isFetching: false,
-    profile: AuthService.getProfile(),
+    user: AuthService.getProfile(),
     error: null,
   },
   action
@@ -23,26 +23,25 @@ const authReducer = (
         error: null,
       };
     case LOGIN_SUCCESS:
-      console.log(action);
       return {
         ...state,
         isFetching: false,
         isAuthenticated: true,
-        profile: action.user,
+        user: action.user,
       };
     case LOGIN_FAILURE:
       return {
         ...state,
         isFetching: false,
         isAuthenticated: false,
-        profile: {},
+        user: {},
         error: action.error,
       };
     case LOGOUT_SUCCESS:
       return {
         ...state,
         isAuthenticated: false,
-        profile: {},
+        user: {},
       };
     default:
       return state;
