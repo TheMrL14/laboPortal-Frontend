@@ -28,10 +28,9 @@
     "web-vitals": "^1.1.0"
   },
   "scripts": {
-    "dev": "webpack serve --config webpack.config.js --port 3000",
-    "start": "webpack && webpack-dev-server --config webpack.config.js --mode development",
-    "pretty": "prettier --write \"./**/*.{js,jsx,json}\"",
-    "build": "webpack"
+    "start": "webpack serve --config webpack.config.js --mode development --port 3000",
+    "build": "webpack --mode production",
+    "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
   },
   "browserslist": {
     "production": [
