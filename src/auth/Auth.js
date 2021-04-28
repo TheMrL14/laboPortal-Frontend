@@ -2,6 +2,7 @@ import Auth0Lock from "auth0-lock";
 import jwtDecode from "jwt-decode";
 
 // Configure Auth0 lock
+console.log(process.env);
 export const lock = new Auth0Lock(
   process.env.REACT_APP_AUTH0_CLIENT_ID,
   process.env.REACT_APP_AUTH0_DOMAIN,
