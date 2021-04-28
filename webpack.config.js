@@ -25,7 +25,10 @@ module.exports = {
     https: false,
   },
   plugins: [
-    new Dotenv(),
+    new Dotenv({
+      path: "./.env", // Path to .env file (this is the default)
+      safe: true, // load .env.example (defaults to "false" which does not use dotenv-safe)
+    }),
     new HtmlWebpackPlugin({
       template: "src/index.html",
       favicon: "src/favicon.ico",
