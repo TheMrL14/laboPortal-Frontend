@@ -29,7 +29,7 @@
   "scripts": {
     "start": "webpack serve --config webpack.config.js --port 3000",
     "pretty": "prettier --write \"./**/*.{js,jsx,json}\"",
-    "build": "react-scripts build"
+    "build": "webpack"
   },
   "browserslist": {
     "production": [
